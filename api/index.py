@@ -11,7 +11,7 @@ CHATBOT_CONFIGS = {
 }
 
 def get_chatbot_html(config):
-    return '''
+    return f'''
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -19,22 +19,22 @@ def get_chatbot_html(config):
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Chatbot</title>
         <style>
-            html, body {
+            html, body {{
                 margin: 0;
                 padding: 0;
                 height: 100%;
                 width: 100%;
                 overflow: hidden;
-            }
-            body {
-                background-image: url('{}');
+            }}
+            body {{
+                background-image: url('{config["background_url"]}');
                 background-size: contain;
                 background-position: center;
                 background-repeat: no-repeat;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-            }
+            }}
         </style>
     </head>
     <body>
@@ -42,7 +42,7 @@ def get_chatbot_html(config):
         (function(w, d, s, o, f, js, fjs) {{
             w['LiveChatWidget'] = o;
             w[o] = w[o] || function() {{
-            (w[o].q = w[o].q || []).push(arguments);
+                (w[o].q = w[o].q || []).push(arguments);
             }};
             js = d.createElement(s);
             js.id = o;
@@ -51,20 +51,16 @@ def get_chatbot_html(config):
             fjs = d.getElementsByTagName(s)[0];
             fjs.parentNode.insertBefore(js, fjs);
             js.onload = function() {{
-            w.LiveChatWidget.init({{
-                locationId: "{}",
-                id: "{}"
-            }});
+                w.LiveChatWidget.init({{
+                    locationId: "{config["location_id"]}",
+                    id: "{config["widget_id"]}"
+                }});
             }};
         }}(window, document, 'script', 'LiveChatWidget', 'https://live-chat-widget.hlbots.com/live-chat-widget.iife.js'));
         </script>
     </body>
     </html>
-    '''.format(
-        config['background_url'],
-        config['location_id'],
-        config['widget_id']
-    )
+    '''
 
 @app.route('/QRBot/')
 def qr_bot():
